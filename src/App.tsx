@@ -21,7 +21,6 @@ function App() {
   return (
     <>
       <h1>React.js と CanvasでPNG生成</h1>
-      <h2>Canvasを頑張って描く場合</h2>
       {png && <img alt="icon" src={png} />}
     </>
   );
