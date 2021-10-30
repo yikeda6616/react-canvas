@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <h1>React.js と CanvasでPNG生成</h1>
-      {png && <img alt="icon" src={png} />}
+      {png && <img alt="rect" src={png} />}
     </>
   );
 }
