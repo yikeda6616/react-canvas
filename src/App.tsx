@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
+import html2canvas from "html2canvas";
+
+const TargetComponent: React.FC = () => (
+  <div id="canvas">画像になるコンポーネント</div>
+);
 
 function App() {
   const [png, setPng] = useState<string | null>(null);
 
   useEffect(() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 250;
-    canvas.height = 250;
-    const ctx = canvas && canvas.getContext("2d");
-    if (!canvas || !ctx) return;
-
-    // canvas描画処理
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#bada55";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    setPng(canvas.toDataURL());
+    const canvas = document.getElementById("canvas");
+    canvas &&
+      html2canvas(canvas).then((canvas) => {
+        setPng(canvas.toDataURL());
+      });
   }, []);
 
   return (
     <>
-      <h1>React.js と CanvasでPNG生成</h1>
-      {png && <img alt="rect" src={png} />}
+      <h1>React.js html2canvasで画像生成</h1>
+      <TargetComponent />
+      {png && <img alt="canvas" src={png} />}
     </>
   );
 }
