@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   div.image {
     width: 150px;
     height: 150px;
+    margin-bottom: 30px;
     img {
       width: 100%;
       height: 100%;
@@ -59,8 +60,46 @@ function App() {
           <img alt="canvas" src={png} />
         </div>
       )}
+      <ExportButton />
     </Wrapper>
   );
 }
+
+const saveAsImage = (uri: string) => {
+  const downloadLink = document.createElement("a");
+
+  if (typeof downloadLink.download === "string") {
+    downloadLink.href = uri;
+    downloadLink.download = "component.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  } else {
+    window.open(uri);
+  }
+};
+
+const onClickExport = () => {
+  const target = document.getElementById("canvas");
+  target &&
+    html2canvas(target).then((canvas) => {
+      const targetImgUri = canvas.toDataURL("img/png");
+      saveAsImage(targetImgUri);
+    });
+};
+
+const StyledButton = styled.button`
+  background-color: #16214d;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+`;
+
+const ExportButton = () => (
+  <StyledButton onClick={() => onClickExport()}>PNGダウンロード</StyledButton>
+);
 
 export default App;
